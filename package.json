@@ -1,0 +1,14 @@
+{
+  "name":         "Router",
+  "description":  "Router, it routes.",
+  "version":      "0.0.1",
+  "author":       "Rob Johnson <rob@entitydigital.co.uk>",
+  "main":         "./route.js",
+  "engines": {
+    "node":       ">= 0.8.0"
+  },
+  "dependencies": {
+    "xregexp":    "*",
+    "underscore": "*"
+  }
+}
