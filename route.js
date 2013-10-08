@@ -1,4 +1,4 @@
-(function(exports) {
+(function() {
   var XRegExp   = XRegExp || require('xregexp').XRegExp,
       _         = _ || require('underscore'),
       RE_PARTS  = /:[a-zA-Z0-9]+|([!$&-\/0-9;=@A-Z_a-z~]|%[0-9A-Za-z]{2})+/g,
