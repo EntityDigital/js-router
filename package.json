@@ -1,6 +1,6 @@
 {
-  "name":         "Router",
-  "description":  "Router, it routes.",
+  "name":         "js-router",
+  "description":  "It's a router, it routes.",
   "version":      "0.0.1",
   "author":       "Rob Johnson <rob@entitydigital.co.uk>",
   "main":         "./route.js",
@@ -10,5 +10,10 @@
   "dependencies": {
     "xregexp":    "*",
     "underscore": "*"
+  },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/EntityDigital/js-router.git"
   }
 }
