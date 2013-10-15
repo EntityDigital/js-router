@@ -1,5 +1,7 @@
 (function() {
-  var Route = require('./route.js');
+  var Route = require('./route.js'),
+      self = this;
+
   var routes = {
     'GET': {},
     'POST': {},
@@ -8,61 +10,55 @@
     'HEAD': {}
   };
 
-  function add(method, name, route) {
-    method = method.toUpperCase();
+  var router = {
+    add: function add(method, name, route) {
+      method = method.toUpperCase();
 
-    if (!validMethods.hasOwnProperty(method)) {
-      throw new Error('Invalid method "' + method + '"');
-    }
-
-    route = _resolveRoute(route);
-    routes[method][name] = route;
-  }
-
-  function resolve(method, url) {
-    method = method.toUpperCase();
-
-    if (!routes.hasOwnProperty(method)) {
-      return false;
-    }
-
-    for (var name in routes[method]) {
-      var params = routes[method][name].resolve(url);
-
-      if (params !== false) {
-        return params;
+      if (!routes.hasOwnProperty(method)) {
+        throw new Error('Invalid method "' + method + '"');
       }
-    }
 
-    return false;
-  }
+      route = _resolveRoute(route);
+      routes[method][name] = route;
+      return router;
+    },
 
-  function reverse(method, name, params) {
-    if (!routes.hasOwnProperty(method) || !routes[method].hasOwnProperty(name)) {
+    resolve: function resolve(method, url) {
+      method = method.toUpperCase();
+
+      if (!routes.hasOwnProperty(method)) {
+        return false;
+      }
+
+      for (var name in routes[method]) {
+        var params = routes[method][name].resolve(url);
+
+        if (params !== false) {
+          return params;
+        }
+      }
+
       return false;
+    },
+
+    reverse: function reverse(method, name, params) {
+      method = method.toUpperCase();
+
+      if (!routes.hasOwnProperty(method) || !routes[method].hasOwnProperty(name)) {
+        console.log('a');
+        return false;
+      }
+
+      return routes[method][name].reverse(params);
+    },
+
+    get: function get(name, route) {
+      return this.add('GET', name, route);
+    },
+
+    post: function post(name, route) {
+      return this.add('POST', name, route);
     }
-
-    return routes[method][name].reverse(params);
-  }
-
-  function get(name, route) {
-    return add('GET', name, route);
-  }
-
-  function post(name, route) {
-    return add('POST', name, route);
-  }
-
-  function put(name, route) {
-    return add('PUT', name, route);
-  }
-
-  function delete(name, route) {
-    return add('DELETE', name, route);
-  }
-
-  function head(name, route) {
-    return add('HEAD', name, route);
   }
 
   function _resolveRoute(route) {
@@ -75,12 +71,6 @@
     }
 
     throw new Error('Could not resolve route');
-  }
-
-  var router = {
-    "add":      add,
-    "resolve":  resolve,
-    "reverse":  reverse
   }
 
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
