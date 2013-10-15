@@ -11,15 +11,18 @@
   };
 
   var router = {
-    add: function add(method, name, route) {
+    add: function add(method, name, route, callback) {
       method = method.toUpperCase();
 
       if (!routes.hasOwnProperty(method)) {
         throw new Error('Invalid method "' + method + '"');
       }
 
-      route = _resolveRoute(route);
-      routes[method][name] = route;
+      route = _routify(route);
+      routes[method][name] = {
+        'route':   route,
+        'handler': callback
+      };
       return router;
     },
 
@@ -31,10 +34,10 @@
       }
 
       for (var name in routes[method]) {
-        var params = routes[method][name].resolve(url);
+        var params = routes[method][name].route.resolve(url);
 
         if (params !== false) {
-          return params;
+          return routes[method][name].route.handler(params);
         }
       }
 
@@ -49,7 +52,7 @@
         return false;
       }
 
-      return routes[method][name].reverse(params);
+      return routes[method][name].route.reverse(params);
     },
 
     get: function get(name, route) {
@@ -61,7 +64,7 @@
     }
   }
 
-  function _resolveRoute(route) {
+  function _routify(route) {
     if (route instanceof Route) {
       return route;
     }
