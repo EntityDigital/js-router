@@ -3,7 +3,7 @@
   "description":  "It's a router, it routes.",
   "version":      "0.0.1",
   "author":       "Rob Johnson <rob@entitydigital.co.uk>",
-  "main":         "./route.js",
+  "main":         "./index.js",
   "engines": {
     "node":       ">= 0.8.0"
   },

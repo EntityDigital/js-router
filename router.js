@@ -3,11 +3,11 @@
       self = this;
 
   var routes = {
-    'GET': {},
-    'POST': {},
-    'PUT': {},
+    'GET':    {},
+    'POST':   {},
+    'PUT':    {},
     'DELETE': {},
-    'HEAD': {}
+    'HEAD':   {}
   };
 
   var router = {
