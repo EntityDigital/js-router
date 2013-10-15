@@ -55,12 +55,12 @@
       return routes[method][name].route.reverse(params);
     },
 
-    get: function get(name, route) {
-      return this.add('GET', name, route);
+    get: function get(name, route, callback) {
+      return this.add('GET', name, route, callback);
     },
 
-    post: function post(name, route) {
-      return this.add('POST', name, route);
+    post: function post(name, route, callback) {
+      return this.add('POST', name, route, callback);
     }
   }
 
