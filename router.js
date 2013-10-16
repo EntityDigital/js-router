@@ -1,6 +1,7 @@
 (function() {
   var Route = require('./route.js'),
-      self = this;
+      url   = require('url'),
+      self  = this;
 
   var routes = {
     'GET':    {},
@@ -26,18 +27,18 @@
       return router;
     },
 
-    resolve: function resolve(method, url) {
-      method = method.toUpperCase();
+    resolve: function resolve(req, res) {
+      method = req.method.toUpperCase();
 
       if (!routes.hasOwnProperty(method)) {
         return false;
       }
 
       for (var name in routes[method]) {
-        var params = routes[method][name].route.resolve(url);
+        var params = routes[method][name].route.resolve(url.parse(req.url).pathname);
 
         if (params !== false) {
-          return routes[method][name].route.handler(params);
+          return routes[method][name].handler(req, res, params);
         }
       }
 
