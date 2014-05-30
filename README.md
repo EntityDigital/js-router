@@ -37,7 +37,7 @@ console.log(blogPost.index.resolve('/blog/An-Imaginative-Blog-Post/page/1'));
 // returns {title: 'An-Imaginative-Blog-Post', page: '1'}
 ```
 
-__Note:__ Optional parameters can be nested to any level
+Optional parameters can be nested to any level
 
 ```js
 var search = new Route('/find(/:start(-to-:end))', {
