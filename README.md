@@ -95,7 +95,7 @@ console.log(book.reverse({
 // returns /Nineteen-Eighty-Four/9780141393049
 ```
 
-__Note:__ `Route.reverse()` also performs validation
+`Route.reverse()` also performs validation
 
 ```js
 console.log(book.reverse({
