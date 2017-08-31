@@ -66,7 +66,7 @@
       }
     }
 
-    return false;
+    return '';
   }
 
   Route.prototype.getRegex = function() {

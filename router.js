@@ -13,32 +13,40 @@
 
   var router = {
     add: function add(method, name, route, callback) {
-      method = method.toUpperCase();
-
-      if (!routes.hasOwnProperty(method)) {
-        throw new Error('Invalid method "' + method + '"');
+      if (typeof(method) !== 'object') {
+        method = [method];
       }
 
-      route = _routify(route);
-      routes[method][name] = {
-        'route':   route,
-        'handler': callback
-      };
+      method.map(function(m, i, a) {
+        a[i] = m.toUpperCase();
+      });
+
+      for (var i in method) {
+        if (!routes.hasOwnProperty(method[i])) {
+          throw new Error('Invalid method "' + method[i] + '"');
+        }
+
+        route = _routify(route);
+        routes[method[i]][name] = {
+          'route':   route,
+          'handler': callback
+        };
+      }
       return router;
     },
 
-    resolve: function resolve(req, res) {
-      method = req.method.toUpperCase();
+    resolve: function resolve(method, url) {
+      method = method.toUpperCase();
 
       if (!routes.hasOwnProperty(method)) {
         return false;
       }
 
       for (var name in routes[method]) {
-        var params = routes[method][name].route.resolve(url.parse(req.url).pathname);
+        var params = routes[method][name].route.resolve(url);
 
         if (params !== false) {
-          return routes[method][name].handler(req, res, params);
+          return routes[method][name].handler(params);
         }
       }
 
@@ -62,6 +70,18 @@
 
     post: function post(name, route, callback) {
       return this.add('POST', name, route, callback);
+    },
+
+    put: function post(name, route, callback) {
+      return this.add('PUT', name, route, callback);
+    },
+
+    delete: function post(name, route, callback) {
+      return this.add('DELETE', name, route, callback);
+    },
+
+    head: function post(name, route, callback) {
+      return this.add('HEAD', name, route, callback);
     }
   }
 
